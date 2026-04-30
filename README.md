@@ -1,31 +1,20 @@
-# Developer Portfolio
+# Ashraful Alam Maahi — Portfolio
 
-Personal portfolio website for an OpenCart developer.  
-Built with plain HTML, CSS, and minimal vanilla JavaScript — no frameworks, no build step.
+Personal portfolio website showcasing OpenCart development, e-commerce systems, and automation work.
 
-## Deploy to GitHub Pages
+**Live site:** https://ashmaahi.github.io/portfolio/
 
-1. Push this repository to GitHub
-2. Go to **Settings → Pages**
-3. Set **Source** to `main` branch, `/ (root)` folder
-4. Click **Save** — your site will be live at `https://<username>.github.io/<repo>/`
+## Tech
 
-## Customization checklist
+Plain HTML, CSS, and vanilla JavaScript — no frameworks, no build step.
 
-- [ ] Replace `Your Name` in `index.html` (Hero `<h1>` and `<p class="hero-greeting">`)
-- [ ] Update `developer.php` code block with your actual name/stack
-- [ ] Replace `your@email.com` with your real email (two places in `index.html`)
-- [ ] Replace `linkedin.com/in/yourprofile` with your LinkedIn URL
-- [ ] Add project screenshots inside `.project-image-area` divs (replace the placeholder SVGs)
-- [ ] Adjust the About section text if needed
-- [ ] Update `<title>` tag in `<head>` with your name
+## Projects featured
 
-## File structure
+- **OpenCart PC Builder System** — Real-time component compatibility and FPS estimation inside OpenCart
+- **Product Data Scraper** — Automated e-commerce product data extraction
+- **ERP Customization** — FrontAccounting extension with serial number and warranty tracking
 
-```
-portfolio/
-├── index.html   # Full page markup
-├── styles.css   # All styles (dark theme, responsive)
-├── script.js    # Nav toggle, modal system, scroll spy
-└── README.md
-```
+## Contact
+
+- Email: maahiashraful@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ashraful-alam-maahi-6a104a1b0
