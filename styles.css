@@ -1064,10 +1064,12 @@ button { font: inherit; color: inherit; }
   border: 1px solid var(--border);
 }
 .about-photo img {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: top;
+  object-position: center 20%;
   filter: grayscale(0.25);
   transition: filter 0.6s, transform 1.2s var(--ease);
 }
@@ -1385,7 +1387,7 @@ button { font: inherit; color: inherit; }
   .bento-lg { grid-row: auto; grid-column: span 2; }
 
   .about { grid-template-columns: 1fr; gap: 48px; }
-  .about-photo { max-width: 420px; }
+  .about-photo { width: 100%; max-width: 380px; margin: 0 auto; }
 
   .contact-links { grid-template-columns: 1fr; }
   .contact-link + .contact-link { border-left: none; border-top: 1px solid var(--border); }
