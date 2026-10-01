@@ -177,3 +177,58 @@ const observer = new IntersectionObserver(
 );
 
 sections.forEach(s => observer.observe(s));
+
+/* ─────────────────────────────────────────
+   Nav background, scroll progress, back-to-top
+───────────────────────────────────────── */
+const navHeader  = document.querySelector('.nav-header');
+const progress   = document.querySelector('.scroll-progress');
+const backToTop  = document.querySelector('.back-to-top');
+
+function onScroll() {
+  const y   = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  navHeader.classList.toggle('scrolled', y > 20);
+  backToTop.classList.toggle('show', y > 600);
+  progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ─────────────────────────────────────────
+   Reveal elements on scroll
+───────────────────────────────────────── */
+const revealTargets = document.querySelectorAll(
+  '.section-header, .project-card, .service-item, .skill-item, .about-text, .stat, .contact-card'
+);
+
+const revealObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        el.classList.add('visible');
+        revealObserver.unobserve(el);
+        setTimeout(() => {
+          el.classList.remove('reveal', 'visible');
+          el.style.transitionDelay = '';
+        }, 700 + parseInt(el.style.transitionDelay, 10));
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+
+revealTargets.forEach(el => {
+  const siblings = Array.from(el.parentElement.children);
+  el.style.transitionDelay = `${Math.min(siblings.indexOf(el), 6) * 70}ms`;
+  el.classList.add('reveal');
+  revealObserver.observe(el);
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
