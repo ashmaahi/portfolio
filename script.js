@@ -240,13 +240,13 @@ const counterObserver = new IntersectionObserver(entries => {
     const el = entry.target;
     const target = Number(el.dataset.target);
     counterObserver.unobserve(el);
-    if (!animate) { el.textContent = target; return; }
+    if (!animate) { el.textContent = target.toLocaleString('en-US'); return; }
     const obj = { v: 0 };
     gsap.to(obj, {
       v: target,
       duration: 1.8,
       ease: 'power2.out',
-      onUpdate: () => { el.textContent = Math.round(obj.v); },
+      onUpdate: () => { el.textContent = Math.round(obj.v).toLocaleString('en-US'); },
     });
   });
 }, { threshold: 0.6 });
@@ -255,7 +255,7 @@ document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el))
 /* ─────────────────────────────────────────
    Rotating role text (typewriter)
 ───────────────────────────────────────── */
-const roles = ['custom modules', 'OpenCart features', 'automation tools', 'ERP customization', 'e-commerce systems'];
+const roles = ['custom modules', 'OpenCart features', 'web scrapers', 'Telegram bots', 'sales CRMs', 'e-commerce systems'];
 const rotatorWord = document.querySelector('.rotator-word');
 
 if (!reduceMotion && rotatorWord) {
@@ -464,19 +464,59 @@ const projectData = {
       'Database-driven rules for compatibility and scoring',
     ],
   },
-  scraper: {
-    title: 'Product Data Scraper',
-    tags: ['Python', 'Automation', 'Data Collection', 'CSV/JSON'],
-    images: ['scrapper.png'],
-    imageAlts: ['Product Data Scraper output'],
-    overview: `An automated tool that extracts structured product data — names, SKUs, prices, specifications, and images — from e-commerce websites, then outputs clean datasets ready for bulk import into catalog systems.`,
-    challenge: `Handling pagination, dynamic content, and inconsistent HTML structures across target sites while keeping the output schema consistent for downstream import pipelines.`,
+  tracker: {
+    title: 'Price & Stock Tracker with Telegram Bot',
+    tags: ['Python', 'Scrapy', 'MongoDB', 'Telegram Bot API', 'Charts'],
+    images: [
+      'images/tracker-dashboard.png',
+      'images/tracker-history.png',
+      'scrapper.png',
+    ],
+    imageAlts: [
+      'Tracker dashboard listing 22,670 products with price and stock',
+      'Price and stock history chart for a single product',
+      'Raw structured product data collected by the scraper',
+    ],
+    overview: `A competitor-intelligence system for a computer retail business. A Scrapy spider collects every product from Startech each day (name, product code, brand, category, price, regular price and stock) and stores a daily snapshot in MongoDB. A live web dashboard lets you search 22,000+ products and open any one to see its price and stock history as a chart. A Telegram bot sends alerts when prices change and answers product-code or name searches with a chart image and a history table.`,
+    challenge: `Turning a one-off scraper into a reliable daily system: capturing product codes for stable matching, storing history without duplicates, rendering clear charts for products that are "to be announced" or out of stock, and keeping the scraper, dashboard and bot running unattended through Windows Task Scheduler.`,
     highlights: [
-      'Multi-page automated crawling with configurable depth',
-      'Structured output in CSV and JSON formats',
-      'Robust error handling with retry logic on failed requests',
-      'Configurable field mapping for different site structures',
-      'Rate limiting to avoid server-side blocking',
+      '22,000+ products scraped and snapshotted daily, with tens of thousands of history points',
+      'Searchable dashboard with 50-per-page lists, stock filters and auto-refresh',
+      'Interactive price and stock history graph per product',
+      'Telegram bot with password access, code and name lookup, and chart reports',
+      'Automatic price-change alerts after each daily scrape',
+      'One-click "Send to Telegram" from the dashboard',
+    ],
+  },
+  crm: {
+    title: 'Lead Crawler & Call Desk CRM',
+    tags: ['Node.js', 'MySQL', 'Cheerio', 'JavaScript', 'WhatsApp'],
+    images: ['images/cover-crm.jpg'],
+    imageAlts: ['Lead crawler and CRM illustration'],
+    overview: `A lead-generation and outreach system for selling business software to computer shops. A concurrent Node.js crawler collects every member company from the Bangladesh Computer Samity public directory (company, branch, representative, phone, email, website and address) and upserts it into MySQL. A local call-desk web app then turns that list into a daily sales routine.`,
+    challenge: `Making outreach consistent. The app tracks who has been called and how interested they are, generates a personalised Bangla WhatsApp message for each contact, reuses a single WhatsApp tab instead of opening dozens, and enforces a daily target of 10 messages. It even opens itself every morning.`,
+    highlights: [
+      '3,172 member records crawled into MySQL in about 14 seconds (30+ concurrent requests)',
+      'Resumable crawl with JSON and CSV exports',
+      'Call status, interest level, notes and full call-log history per lead',
+      'Personalised Bangla WhatsApp templates, sent from one reusable tab',
+      'Daily outreach target with progress tracking and reminders',
+      '"Tomorrow Jobs" drag-and-drop Kanban: To Do, Waiting, Callback, Interested, Not interested',
+    ],
+  },
+  fileserver: {
+    title: 'High-Speed LAN File Server',
+    tags: ['Python', 'pyftpdlib', 'HTTP', 'Networking'],
+    images: ['images/cover-fileserver.jpg'],
+    imageAlts: ['LAN file server illustration'],
+    overview: `A home and office file-sharing server that exposes a storage drive to every device on the local network. It runs an FTP server for file managers like FileZilla and a browser-based file explorer for phones and TVs, with one-click start, stop and firewall setup scripts.`,
+    challenge: `The first version crashed with MemoryError on large videos because files were read fully into RAM, and transfers crawled at about 11 MB/s. I rewrote file delivery to stream in chunks with HTTP Range support, so videos can seek, then added zero-copy sendfile, larger socket buffers and HTTP/1.1 keep-alive.`,
+    highlights: [
+      'FTP (passive mode) and a web file browser served from the same drive',
+      'Chunked streaming with HTTP Range requests, so large videos play and seek',
+      'Zero-copy sendfile and tuned TCP buffers: ~11 MB/s → ~89 MB/s in local tests',
+      'Path-safe directory browsing that blocks access outside the shared root',
+      'Automatic firewall rules and port-conflict detection',
     ],
   },
   erp: {
@@ -515,7 +555,7 @@ function openModal(key) {
     <h2>${d.title}</h2>
     <div class="modal-tags">${d.tags.map(t => `<span>${t}</span>`).join('')}</div>
     <div class="modal-images">
-      ${d.images.map((src, i) => `<img src="${src}" alt="${d.imageAlts[i] || ''}" loading="lazy" />`).join('')}
+      ${d.images.map((src, i) => `<a href="${src}" target="_blank" rel="noopener"><img src="${src}" alt="${d.imageAlts[i] || ''}" loading="lazy" /></a>`).join('')}
     </div>
     <h3>Overview</h3>
     <p>${d.overview}</p>

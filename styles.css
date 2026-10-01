@@ -437,6 +437,16 @@ button { font: inherit; color: inherit; }
 }
 @keyframes ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
 
+.hero-name {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.hero-name span { color: var(--text-dim); font-weight: 400; }
+
 .hero-title {
   font-family: var(--font-display);
   font-size: clamp(46px, 7.2vw, 96px);
@@ -744,7 +754,7 @@ button { font: inherit; color: inherit; }
 
 .project-media {
   position: relative;
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 16 / 9;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--surface);
@@ -765,7 +775,7 @@ button { font: inherit; color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top left;
+  object-position: center;
   transition: transform 1.2s var(--ease);
 }
 .project-media:hover img { transform: scale(1.06); }
@@ -1266,13 +1276,19 @@ button { font: inherit; color: inherit; }
   gap: 12px;
   margin-bottom: 28px;
 }
+.modal-images a:first-child { grid-column: 1 / -1; }
 .modal-images img {
   width: 100%;
+  height: 100%;
   border-radius: 12px;
   border: 1px solid var(--border);
   object-fit: cover;
-  max-height: 240px;
+  object-position: top;
+  max-height: 220px;
+  transition: border-color 0.3s, opacity 0.3s;
 }
+.modal-images a:first-child img { max-height: 400px; }
+.modal-images a:hover img { border-color: var(--accent); opacity: 0.9; }
 .modal-content p {
   color: var(--text-muted);
   line-height: 1.75;
